@@ -1,5 +1,6 @@
 import { Page } from '@playwright/test';
 import { BasePage } from './BasePage';
+import { config } from '../utils/config';
 
 export class LoginPage extends BasePage {
   // Locators
@@ -28,7 +29,7 @@ export class LoginPage extends BasePage {
     // console.log(adminTab);
 
     await this.click(this.genericTab);
-    await this.page.waitForURL('https://opensource-demo.orangehrmlive.com/web/index.php/admin/viewSystemUsers');
+    await this.page.waitForURL(config.VIEW_URL);
 
     
 

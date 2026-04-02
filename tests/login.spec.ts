@@ -2,6 +2,7 @@ import { test, expect, Browser, BrowserContext, Page, chromium } from '@playwrig
 import { LoginPage } from '../pages/LoginPage';
 import { config } from '../utils/config';
 import { AdminPage } from '../pages/AdminPage';
+import { logger } from '../utils/logger';
 
 
 let browser: Browser;
@@ -43,10 +44,24 @@ test.describe('OrangeHRM Login Tests and Admin Tab Suite', () => {
 
     let adminpage: AdminPage;
     adminpage = new AdminPage(sharedPage);
-   let result= await adminpage.getNumberRecords();
-console.log("The number of records before add is ", result)
+    let noRecordBefore = await adminpage.getNumberRecords();
+    console.log("The number of records before add is ", noRecordBefore);
 
-    // 
+    // generate usernameDynamically
+
+    const randomSuffix = Math.floor(Math.random() * 10000);
+    const username = `testuser_${randomSuffix}`;
+
+    logger.info(`Generated username: ${username}`);
+
+    await adminpage.addUser(username, "Admin123");
+
+
+    let noRecordAfter = await adminpage.getNumberRecords();
+    console.log("The number of records after add is ", noRecordAfter);
+
+
+    // asssert 
   });
 
 
