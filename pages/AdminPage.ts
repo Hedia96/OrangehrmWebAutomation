@@ -109,7 +109,7 @@ private yesDeletBtn="//button[normalize-space(.)='Yes, Delete']";
 
         let records = await this.getNumberRecords();
         try {
-            expect(records, "There is no result by this name..it seems not created").toBeGreaterThan(0);
+            expect(records, `There is should be aresult by this name ${username}`).toBeGreaterThan(0);
             await this.page.click(this.deletBtn);// get the button 
             await this.page.click(this.yesDeletBtn);
             await this.page.click(this.resetBtn);
