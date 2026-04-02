@@ -2,6 +2,7 @@ import { Page, Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { assert } from 'node:console';
 import { logger } from '../utils/logger';
+import { throws } from 'node:assert/strict';
 
 export class AdminPage extends BasePage {
     private records = "//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']/span";
@@ -23,6 +24,11 @@ export class AdminPage extends BasePage {
 
 
     private saveBtn = "//button[normalize-space(.)='Save']";
+    private searchBtn = "//button[normalize-space(.)='Search']";
+    private resetBtn = "//button[normalize-space(.)='Reset']";
+
+    private deletBtn = "//i[@class='oxd-icon bi-trash']//parent::button[@class='oxd-icon-button oxd-table-cell-action-space']";
+private yesDeletBtn="//button[normalize-space(.)='Yes, Delete']";
     /*
     </div>
     <div data-v-3ebc98ba data-v-390abb6d
@@ -90,6 +96,28 @@ export class AdminPage extends BasePage {
         // // get number after adding  
         // let noRecordAfter = await this.getNumberRecords();
         // logger.info(`The number of records After is  ${noRecordAfter}`);
+
+        await this.click(this.searchBtn);
+
+
+
+    }
+
+    async deleteUser(username: string) {
+        await this.fill(this.usernameFld, username);
+        await this.click(this.searchBtn);
+
+        let records = await this.getNumberRecords();
+        try {
+            expect(records, "There is no result by this name..it seems not created").toBeGreaterThan(0);
+            await this.page.click(this.deletBtn);// get the button 
+            await this.page.click(this.yesDeletBtn);
+            await this.page.click(this.resetBtn);
+
+
+        } catch (error) {
+            throw error;
+        }
 
 
 

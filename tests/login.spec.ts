@@ -38,6 +38,11 @@ test.describe('OrangeHRM Login Tests and Admin Tab Suite', () => {
 
 
   });
+  
+    // generate usernameDynamically
+
+    const randomSuffix = Math.floor(Math.random() * 10000);
+    const username = `testuser_${randomSuffix}`;
 
   test('Navigate to Admin Tab and count the Records', async () => {
     // wait to load admin page loaded
@@ -47,10 +52,6 @@ test.describe('OrangeHRM Login Tests and Admin Tab Suite', () => {
     let noRecordBefore = await adminpage.getNumberRecords();
     console.log("The number of records before add is ", noRecordBefore);
 
-    // generate usernameDynamically
-
-    const randomSuffix = Math.floor(Math.random() * 10000);
-    const username = `testuser_${randomSuffix}`;
 
     logger.info(`Generated username: ${username}`);
 
@@ -62,7 +63,39 @@ test.describe('OrangeHRM Login Tests and Admin Tab Suite', () => {
 
 
     // asssert 
+    logger.info('Assert the number of records increased by 1')
+    expect(noRecordAfter,'Expected the number of records after creation is larger than before').toEqual(noRecordBefore + 1);
+
   });
+
+
+
+  
+  test('Delete Created user and count the Records After that', async () => {
+    // wait to load admin page loaded
+
+    let adminpage: AdminPage;
+    adminpage = new AdminPage(sharedPage);
+    let noRecordBefore = await adminpage.getNumberRecords();
+    console.log("The number of records before Delete  is ", noRecordBefore);
+
+
+    logger.info(`Generated username: ${username}`);
+
+    await adminpage.deleteUser(username);
+
+
+    let noRecordAfter = await adminpage.getNumberRecords();
+    console.log("The number of records after Delete is ", noRecordAfter);
+
+
+    // asssert 
+    logger.info('Assert the number of records decreased by 1')
+    expect(noRecordAfter,'Expected the number of records after deletation is less than before').toEqual(noRecordBefore - 1);
+
+  });
+
+  
 
 
 
