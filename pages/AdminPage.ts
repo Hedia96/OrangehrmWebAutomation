@@ -8,7 +8,7 @@ export class AdminPage extends BasePage {
     private records = "//div[@class='orangehrm-horizontal-padding orangehrm-vertical-padding']/span";
     private adddBtn = "//div[@class='orangehrm-header-container']/button";
 
-    private employFld = "input[placeholder='Type for hints...']"
+    private employFld = "input[placeholder='Type for hints...']";
     private employeeNameDDL = ".oxd-autocomplete-dropdown .oxd-autocomplete-option";
     //oxd-select-text oxd-select-text--active
     private userRoleDDL = "//label[text()='User Role']/../..//div[@class='oxd-select-text-input']";
